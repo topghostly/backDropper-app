@@ -6,7 +6,13 @@ module.exports = {
     "./app/index.jsx",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        nmedium: ["NeueMontreal-Medium", "sans-serif"],
+        nregular: ["NeueMontreal-Regular", "sans-serif"],
+        nbold: ["NeueMontreal-Bold", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 };
