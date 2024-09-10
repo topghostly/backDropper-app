@@ -1,27 +1,40 @@
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  SafeAreaView,
-  Text,
-} from "react-native";
+import { View, TextInput, SafeAreaView, Text } from "react-native";
 import React, { useEffect, useState } from "react";
-import serchIcon from "../assets/icons/search.png";
-import usePixel from "../hooks/usePixel";
 import { getQueryData } from "../lib/Pixels";
+import MasonryList from "react-native-masonry-list";
 
 const Search = () => {
   const [query, setQuery] = useState("");
   const [data, setDate] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const [list, setList] = useState([]);
 
-  const list = [];
+  useEffect(() => {
+    const updatedList = data.map((item) => ({
+      uri: item.src.medium,
+      dimensions: {
+        width: item.width,
+        height: item.height,
+      },
+      imageId: item.id,
+      avg_color: item.avg_color,
+      photographer: item.photographer,
+    }));
 
-  useEffect(() => {}, [data]);
+    setList(updatedList);
+    if (updatedList.length > 0) {
+      setIsLoading(false);
+    }
+  }, [data]);
 
   const handleSubmit = async () => {
-    const responce = await getQueryData(query, 1);
+    setIsLoading(true);
+    setList([]);
+    const response = await getQueryData(query, pageNumber);
+    setDate(response);
   };
+
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="h-10 mx-2 my-2 rounded-lg items-center flex-row bg-gray-200 px-3">
@@ -36,6 +49,36 @@ const Search = () => {
           onSubmitEditing={handleSubmit}
         />
       </View>
+
+      {!isLoading && list.length > 0 ? (
+        <View className="flex-1 ">
+          <MasonryList
+            images={list}
+            columns={2}
+            spacing={2}
+            imageContainerStyle={{
+              borderRadius: 18,
+            }}
+            onPressImage={() => {
+              console.log("pressed");
+            }}
+            onLongPressImage={() => {
+              console.log("long Pressed");
+            }}
+            renderIndividualFooter={(item) => {
+              return (
+                <Text className="text-sm font-nbold pl-2 mb-3">
+                  {item.photographer}
+                </Text>
+              );
+            }}
+          />
+        </View>
+      ) : (
+        <View className="flex-1 justify-center items-center">
+          <Text className="font-nbold">No Current image</Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
