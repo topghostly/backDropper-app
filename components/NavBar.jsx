@@ -30,7 +30,7 @@ const LinkList = ({ link }) => {
 const NavBar = () => {
   return (
     <FlatList
-      className="space-x-4 mt-1 py-2"
+      className="space-x-4 mt-1 py-2 bg-white"
       data={links}
       keyExtractor={(item, index) => index.toString()}
       renderItem={({ item }) => <LinkList link={item} />}

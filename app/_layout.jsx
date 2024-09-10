@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { SplashScreen, Tabs } from "expo-router";
 import { useFonts } from "expo-font";
+import TabBar from "../components/TabBar";
 
 const RootLayout = () => {
   SplashScreen.preventAutoHideAsync();
@@ -20,7 +21,11 @@ const RootLayout = () => {
   if (!fontsLoaded && !error) return null;
 
   return (
-    <Tabs initialRouteName="index" screenOptions={{}}>
+    <Tabs
+      initialRouteName="index"
+      screenOptions={{}}
+      tabBar={(props) => <TabBar {...props} />}
+    >
       <Tabs.Screen
         name="index"
         options={{
