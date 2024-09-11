@@ -2,13 +2,39 @@ import { View, TextInput, SafeAreaView, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import { getQueryData } from "../lib/Pixels";
 import MasonryList from "react-native-masonry-list";
+import { useRoute } from "@react-navigation/native";
 
 const Search = () => {
   const [query, setQuery] = useState("");
+  const [navSearch, setNavSearch] = useState("");
   const [data, setDate] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [list, setList] = useState([]);
+
+  const route = useRoute();
+
+  const getSearchData = async (search) => {
+    if (search === "") return;
+
+    setIsLoading(true);
+    setList([]);
+    const response = await getQueryData(search, pageNumber);
+    // console.log("The responce is", response);
+    setDate(response);
+    setQuery(search);
+  };
+
+  useEffect(() => {
+    setNavSearch("");
+    setIsLoading(true);
+    setList([]);
+    if (route.params) {
+      const { navQuery } = route.params;
+      setNavSearch(navQuery);
+      getSearchData(navSearch);
+    }
+  }, [route.params, navSearch]);
 
   useEffect(() => {
     const updatedList = data.map((item) => ({
@@ -32,6 +58,7 @@ const Search = () => {
     setIsLoading(true);
     setList([]);
     const response = await getQueryData(query, pageNumber);
+    console.log(response);
     setDate(response);
   };
 
@@ -72,6 +99,7 @@ const Search = () => {
                 </Text>
               );
             }}
+            rerender={true}
           />
         </View>
       ) : (

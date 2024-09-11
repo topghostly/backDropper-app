@@ -1,17 +1,22 @@
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import links from "../constants/navLinks";
+import { useNavigation } from "@react-navigation/native";
 
 const LinkList = ({ link }) => {
+  const navigation = useNavigation();
   const [active, setActive] = useState(false);
+
+  const handlePress = () => {
+    navigation.navigate("search", { navQuery: link.uri });
+  };
   useEffect(() => {
     if (link.uri === "All") {
       setActive(true);
     }
   });
   return (
-    <TouchableOpacity activeOpacity={0.6}>
+    <TouchableOpacity activeOpacity={0.6} onPress={handlePress}>
       <View
         className={`bg-gray-200 mr-1 ml-2 rounded-[100px] ${
           active && "bg-black"
