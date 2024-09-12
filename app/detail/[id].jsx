@@ -13,7 +13,6 @@ import { API_KEY } from "@env";
 import arrow from "../../assets/icons/arrow.png";
 import { router } from "expo-router";
 import MasonryList from "react-native-masonry-list";
-import LottieView from "lottie-react-native";
 import "react-native-reanimated";
 import LoadingAnimation from "../../components/LoadingAnimation";
 

@@ -36,7 +36,6 @@ const usePixel = ({ type, pageNumber, query }) => {
   };
 
   useEffect(() => {
-    console.log("In the sueffect");
     fetchData();
   }, []);
 
