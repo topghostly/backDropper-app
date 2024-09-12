@@ -90,7 +90,7 @@ const Details = () => {
     } catch (error) {
       Alert.alert("Error", error);
     } finally {
-      setLoading(true);
+      setLoading(false);
     }
   };
 
@@ -113,11 +113,12 @@ const Details = () => {
           </View>
         </>
       ) : (
-        <View className="flex-1 bg-red-600 justify-center items-center">
-          <LoadingAnimation />
+        <View className="flex-1 justify-center items-center">
+          <LoadingAnimation size={40} />
         </View>
       )}
-      <BottomBar />
+
+      {!loading && <BottomBar />}
     </SafeAreaView>
   );
 };
