@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getQueryData } from "../lib/Pixels";
 import MasonryList from "react-native-masonry-list";
 import { useRoute } from "@react-navigation/native";
+import { router } from "expo-router";
 
 const Search = () => {
   const [query, setQuery] = useState("");
@@ -20,7 +21,6 @@ const Search = () => {
     setIsLoading(true);
     setList([]);
     const response = await getQueryData(search, pageNumber);
-    // console.log("The responce is", response);
     setDate(response);
     setQuery(search);
   };
@@ -58,7 +58,6 @@ const Search = () => {
     setIsLoading(true);
     setList([]);
     const response = await getQueryData(query, pageNumber);
-    console.log(response);
     setDate(response);
   };
 
@@ -86,8 +85,8 @@ const Search = () => {
             imageContainerStyle={{
               borderRadius: 18,
             }}
-            onPressImage={() => {
-              console.log("pressed");
+            onPressImage={(item) => {
+              router.push(`/detail/${item.imageId}`);
             }}
             onLongPressImage={() => {
               console.log("long Pressed");

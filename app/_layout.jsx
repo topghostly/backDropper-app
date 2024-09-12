@@ -21,33 +21,42 @@ const RootLayout = () => {
   if (!fontsLoaded && !error) return null;
 
   return (
-    <Tabs
-      initialRouteName="index"
-      screenOptions={{}}
-      tabBar={(props) => <TabBar {...props} />}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          titleL: "Home",
-          headerShown: false,
-        }}
-      />
-      <Tabs.Screen
-        name="search"
-        options={{
-          titleL: "Search",
-          headerShown: false,
-        }}
-      />
-      <Tabs.Screen
-        name="downloads"
-        options={{
-          titleL: "Downloads",
-          headerShown: false,
-        }}
-      />
-    </Tabs>
+    <>
+      <Tabs
+        initialRouteName="index"
+        screenOptions={{}}
+        tabBar={(props) => <TabBar {...props} />}
+      >
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: "Home",
+            headerShown: false,
+          }}
+        />
+        <Tabs.Screen
+          name="search"
+          options={{
+            title: "Search",
+            headerShown: false,
+          }}
+        />
+        <Tabs.Screen
+          name="downloads"
+          options={{
+            title: "Downloads",
+            headerShown: false,
+          }}
+        />
+        <Tabs.Screen
+          name="detail/[id]"
+          options={{
+            title: "Details",
+            headerShown: false,
+          }}
+        />
+      </Tabs>
+    </>
   );
 };
 

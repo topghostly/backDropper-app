@@ -2,6 +2,10 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 
 const TabBar = ({ state, descriptors, navigation }) => {
+  const currentRoute = state.routes[state.index].name;
+  if (currentRoute === "detail/[id]") {
+    return null;
+  }
   return (
     <View style={styles.tabContainer}>
       {state.routes.map((route, index) => {
@@ -13,7 +17,8 @@ const TabBar = ({ state, descriptors, navigation }) => {
             ? options.title
             : route.name;
 
-        if (["_sitemap", "+not-found"].includes(route.name)) return null;
+        if (["_sitemap", "+not-found", "detail/[id]"].includes(route.name))
+          return null;
 
         const isFocused = state.index === index;
 

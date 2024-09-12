@@ -1,15 +1,18 @@
-import { View, Text, FlatList, Image, Alert } from "react-native";
+import { View, Text, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import NavBar from "../components/NavBar";
+import { useNavigation } from "@react-navigation/native";
 import MasonryList from "react-native-masonry-list";
 
 import usePixel from "../hooks/usePixel";
 import { getIndexData } from "../lib/Pixels";
+import { router } from "expo-router";
 
 const Index = () => {
   const [pageNumber, setPageNumber] = useState(2);
   const [newList, setNewList] = useState([]);
+  const navigation = useNavigation();
 
   const { data, loading } = usePixel({
     type: "index",
@@ -67,8 +70,8 @@ const Index = () => {
           imageContainerStyle={{
             borderRadius: 18,
           }}
-          onPressImage={() => {
-            console.log("pressed");
+          onPressImage={(item) => {
+            router.push(`/detail/${item.imageId}`);
           }}
           onLongPressImage={() => {
             console.log("long Pressed");
