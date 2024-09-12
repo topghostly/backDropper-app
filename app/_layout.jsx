@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { SplashScreen, Tabs } from "expo-router";
 import { useFonts } from "expo-font";
 import TabBar from "../components/TabBar";
+import "react-native-reanimated";
 
 const RootLayout = () => {
   SplashScreen.preventAutoHideAsync();

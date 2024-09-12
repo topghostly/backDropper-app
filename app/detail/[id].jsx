@@ -13,6 +13,9 @@ import { API_KEY } from "@env";
 import arrow from "../../assets/icons/arrow.png";
 import { router } from "expo-router";
 import MasonryList from "react-native-masonry-list";
+import LottieView from "lottie-react-native";
+import "react-native-reanimated";
+import LoadingAnimation from "../../components/LoadingAnimation";
 
 const Return = () => {
   return (
@@ -87,12 +90,11 @@ const Details = () => {
     } catch (error) {
       Alert.alert("Error", error);
     } finally {
-      setLoading(false);
+      setLoading(true);
     }
   };
 
   useEffect(() => {
-    console.log("this has started");
     fetchData();
   }, [id]);
   return (
@@ -111,7 +113,9 @@ const Details = () => {
           </View>
         </>
       ) : (
-        <Text>No image</Text>
+        <View className="flex-1 bg-red-600 justify-center items-center">
+          <LoadingAnimation />
+        </View>
       )}
       <BottomBar />
     </SafeAreaView>

@@ -4,6 +4,7 @@ import { getQueryData } from "../lib/Pixels";
 import MasonryList from "react-native-masonry-list";
 import { useRoute } from "@react-navigation/native";
 import { router } from "expo-router";
+import "react-native-reanimated";
 
 const Search = () => {
   const [query, setQuery] = useState("");

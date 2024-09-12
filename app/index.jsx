@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import NavBar from "../components/NavBar";
 import { useNavigation } from "@react-navigation/native";
 import MasonryList from "react-native-masonry-list";
-
+import "react-native-reanimated";
 import usePixel from "../hooks/usePixel";
 import { getIndexData } from "../lib/Pixels";
 import { router } from "expo-router";
