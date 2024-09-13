@@ -21,7 +21,7 @@ const LoadingAnimation = ({ size }) => {
       }}
       transition={{
         type: "timing",
-        duration: 1000,
+        duration: 600,
         loop: true,
       }}
       style={{

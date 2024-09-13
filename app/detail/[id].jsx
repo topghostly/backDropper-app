@@ -4,8 +4,8 @@ import {
   SafeAreaView,
   Alert,
   Image,
-  ScrollView,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
@@ -13,8 +13,48 @@ import { API_KEY } from "@env";
 import arrow from "../../assets/icons/arrow.png";
 import { router } from "expo-router";
 import MasonryList from "react-native-masonry-list";
+import * as FileSystem from "expo-file-system";
+import * as MediaLibrary from "expo-media-library";
+import * as Permissions from "expo-permissions";
+
 import "react-native-reanimated";
 import LoadingAnimation from "../../components/LoadingAnimation";
+
+const requestStoragePermission = async () => {
+  if (Platform.OS === "android") {
+    const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
+    return status === "granted";
+  }
+  return true;
+};
+
+const downloadImage = async (imageUri) => {
+  try {
+    // Request media library permission
+    const { status } = await MediaLibrary.requestPermissionsAsync();
+
+    if (status !== "granted") {
+      Alert.alert(
+        "Permission denied",
+        "Media Library permission is required to save the image."
+      );
+      return;
+    }
+
+    // Download the image to a local file
+    const fileUri = FileSystem.documentDirectory + "image.jpg"; // You can change the file name
+    const downloadedFile = await FileSystem.downloadAsync(imageUri, fileUri);
+
+    // Save the file to the media library
+    const asset = await MediaLibrary.createAssetAsync(downloadedFile.uri);
+    await MediaLibrary.createAlbumAsync("Downloads", asset, false);
+
+    Alert.alert("Success", "Image downloaded successfully");
+  } catch (error) {
+    console.log("Error downloading image:", error);
+    Alert.alert("Error", "Failed to download the image");
+  }
+};
 
 const Return = () => {
   return (
@@ -35,7 +75,7 @@ const Return = () => {
   );
 };
 
-const BottomBar = () => {
+const BottomBar = ({ downloadUrl, avgColor }) => {
   return (
     <View
       className="absolute bottom-0 right-0 w-full flex-row bg-white h-20 p-0 m-0 justify-center items-center border-t-gray-600"
@@ -47,9 +87,12 @@ const BottomBar = () => {
       }}
     >
       <TouchableOpacity className="bg-gray-200 w-24 h-12 justify-center items-center  rounded-full">
-        <Text className="text-lg font-nmedium">Save</Text>
+        <Text className="text-lg font-nmedium">Share</Text>
       </TouchableOpacity>
-      <TouchableOpacity className="bg-black w-24 h-12 justify-center items-center  rounded-full">
+      <TouchableOpacity
+        className={`bg-[#000000] w-24 h-12 justify-center items-center rounded-full`}
+        onPress={() => [downloadImage(downloadUrl)]}
+      >
         <Text className="text-lg font-nmedium text-white">Save</Text>
       </TouchableOpacity>
     </View>
@@ -77,13 +120,15 @@ const Details = () => {
       setImageData([
         {
           uri: data.src.medium,
+          avgColor: data.avg_color,
           dimensions: {
             width: data.width,
             height: data.height,
           },
           imageId: data.id,
           avg_color: data.avg_color,
-          photographer: data.photographer,
+          photographer: data.alt,
+          downloadSource: data.src.large2x,
         },
       ]);
     } catch (error) {
@@ -113,11 +158,16 @@ const Details = () => {
         </>
       ) : (
         <View className="flex-1 justify-center items-center">
-          <LoadingAnimation size={40} />
+          <LoadingAnimation size={38} />
         </View>
       )}
 
-      {!loading && <BottomBar />}
+      {!loading && (
+        <BottomBar
+          downloadUrl={imageData[0].downloadSource}
+          avgColor={imageData[0].avgColor}
+        />
+      )}
     </SafeAreaView>
   );
 };

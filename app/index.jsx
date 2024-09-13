@@ -28,7 +28,7 @@ const Index = () => {
       },
       imageId: item.id,
       avg_color: item.avg_color,
-      photographer: item.photographer,
+      photographer: item.alt,
     }));
 
     setNewList(initialList);
@@ -47,10 +47,9 @@ const Index = () => {
         },
         imageId: item.id,
         avg_color: item.avg_color,
-        photographer: item.photographer,
+        photographer: item.alt,
       }));
 
-      // Update newList state with the new data
       setNewList((prevList) => [...prevList, ...newContent]);
     } catch (error) {
       Alert.alert("Error", error.message);
@@ -78,7 +77,10 @@ const Index = () => {
           }}
           renderIndividualFooter={(item) => {
             return (
-              <Text className="text-sm font-nbold pl-2 mb-3">
+              <Text
+                className="text-sm font-nbold pl-2 mb-3 w-[170px]"
+                numberOfLines={2}
+              >
                 {item.photographer}
               </Text>
             );

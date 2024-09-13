@@ -5,6 +5,7 @@ import MasonryList from "react-native-masonry-list";
 import { useRoute } from "@react-navigation/native";
 import { router } from "expo-router";
 import "react-native-reanimated";
+import LoadingAnimation from "../components/LoadingAnimation";
 
 const Search = () => {
   const [query, setQuery] = useState("");
@@ -46,7 +47,7 @@ const Search = () => {
       },
       imageId: item.id,
       avg_color: item.avg_color,
-      photographer: item.photographer,
+      photographer: item.alt,
     }));
 
     setList(updatedList);
@@ -94,7 +95,10 @@ const Search = () => {
             }}
             renderIndividualFooter={(item) => {
               return (
-                <Text className="text-sm font-nbold pl-2 mb-3">
+                <Text
+                  className="text-sm font-nbold pl-2 mb-3 w-[170px]"
+                  numberOfLines={2}
+                >
                   {item.photographer}
                 </Text>
               );
@@ -104,7 +108,7 @@ const Search = () => {
         </View>
       ) : (
         <View className="flex-1 justify-center items-center">
-          <Text className="font-nbold">No Current image</Text>
+          <LoadingAnimation size={38} />
         </View>
       )}
     </SafeAreaView>
