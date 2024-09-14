@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
-import { API_KEY } from "@env";
 import arrow from "../../assets/icons/arrow.png";
 import { router } from "expo-router";
 import MasonryList from "react-native-masonry-list";
@@ -110,7 +109,8 @@ const Details = () => {
 
     const options = {
       headers: {
-        Authorization: API_KEY,
+        Authorization:
+          "tNaneYYkO9T6mjIhcgcIS5crjz1M9VopPHorQWM7CROXoNLfAUmNPZEH",
       },
     };
     const url = `https://api.pexels.com/v1/photos/${id}`;
