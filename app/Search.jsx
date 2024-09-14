@@ -12,7 +12,7 @@ const Search = () => {
   const [navSearch, setNavSearch] = useState("");
   const [data, setDate] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [list, setList] = useState([]);
 
   const route = useRoute();
@@ -55,6 +55,12 @@ const Search = () => {
       setIsLoading(false);
     }
   }, [data]);
+  useEffect(() => {
+    // setTimeout(() => {
+    //   setIsLoading(false);
+    // }, 500);
+    setIsLoading(false);
+  }, []);
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -106,9 +112,15 @@ const Search = () => {
             rerender={true}
           />
         </View>
-      ) : (
+      ) : isLoading ? (
         <View className="flex-1 justify-center items-center">
           <LoadingAnimation size={38} />
+        </View>
+      ) : (
+        <View className="flex-1 justify-center items-center">
+          <Text className="font-semibold font-nbold text-md">
+            Make a search
+          </Text>
         </View>
       )}
     </SafeAreaView>
