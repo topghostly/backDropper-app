@@ -8,11 +8,13 @@ import "react-native-reanimated";
 import usePixel from "../hooks/usePixel";
 import { getIndexData } from "../lib/Pixels";
 import { router } from "expo-router";
+import ModalScreen from "../components/ModalScreen";
 
 const Index = () => {
   const [pageNumber, setPageNumber] = useState(2);
   const [newList, setNewList] = useState([]);
-  const navigation = useNavigation();
+  const [showModalScreen, setShowModalScreen] = useState(false);
+  const [downlaodLink, setDownloadLink] = useState("");
 
   const { data, loading } = usePixel({
     type: "index",
@@ -29,6 +31,7 @@ const Index = () => {
       imageId: item.id,
       avg_color: item.avg_color,
       photographer: item.alt,
+      downloadUri: item.src.large2x,
     }));
 
     setNewList(initialList);
@@ -48,6 +51,7 @@ const Index = () => {
         imageId: item.id,
         avg_color: item.avg_color,
         photographer: item.alt,
+        downloadUri: item.src.large2x,
       }));
 
       setNewList((prevList) => [...prevList, ...newContent]);
@@ -72,8 +76,9 @@ const Index = () => {
           onPressImage={(item) => {
             router.push(`/detail/${item.imageId}`);
           }}
-          onLongPressImage={() => {
-            console.log("long Pressed");
+          onLongPressImage={(item) => {
+            setDownloadLink(item.downloadUri);
+            setShowModalScreen(true);
           }}
           renderIndividualFooter={(item) => {
             return (
@@ -88,6 +93,12 @@ const Index = () => {
           onEndReached={getNewContent}
           rerender={true}
         />
+        {showModalScreen && (
+          <ModalScreen
+            setShowModalScreen={setShowModalScreen}
+            downloadUri={downlaodLink}
+          />
+        )}
       </View>
     </SafeAreaView>
   );

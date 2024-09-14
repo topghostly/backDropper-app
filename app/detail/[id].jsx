@@ -14,7 +14,6 @@ import { router } from "expo-router";
 import MasonryList from "react-native-masonry-list";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
-import * as Permissions from "expo-permissions";
 
 import "react-native-reanimated";
 import LoadingAnimation from "../../components/LoadingAnimation";

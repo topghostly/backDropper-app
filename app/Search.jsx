@@ -6,6 +6,7 @@ import { useRoute } from "@react-navigation/native";
 import { router } from "expo-router";
 import "react-native-reanimated";
 import LoadingAnimation from "../components/LoadingAnimation";
+import ModalScreen from "../components/ModalScreen";
 
 const Search = () => {
   const [query, setQuery] = useState("");
@@ -14,6 +15,9 @@ const Search = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [list, setList] = useState([]);
+
+  const [showModalScreen, setShowModalScreen] = useState(false);
+  const [downlaodLink, setDownloadLink] = useState("");
 
   const route = useRoute();
 
@@ -48,6 +52,7 @@ const Search = () => {
       imageId: item.id,
       avg_color: item.avg_color,
       photographer: item.alt,
+      downloadUri: item.src.large2x,
     }));
 
     setList(updatedList);
@@ -56,9 +61,6 @@ const Search = () => {
     }
   }, [data]);
   useEffect(() => {
-    // setTimeout(() => {
-    //   setIsLoading(false);
-    // }, 500);
     setIsLoading(false);
   }, []);
 
@@ -96,8 +98,9 @@ const Search = () => {
             onPressImage={(item) => {
               router.push(`/detail/${item.imageId}`);
             }}
-            onLongPressImage={() => {
-              console.log("long Pressed");
+            onLongPressImage={(item) => {
+              setDownloadLink(item.downloadUri);
+              setShowModalScreen(true);
             }}
             renderIndividualFooter={(item) => {
               return (
@@ -111,6 +114,12 @@ const Search = () => {
             }}
             rerender={true}
           />
+          {showModalScreen && (
+            <ModalScreen
+              setShowModalScreen={setShowModalScreen}
+              downloadUri={downlaodLink}
+            />
+          )}
         </View>
       ) : isLoading ? (
         <View className="flex-1 justify-center items-center">

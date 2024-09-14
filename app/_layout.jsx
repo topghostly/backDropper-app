@@ -3,6 +3,7 @@ import { SplashScreen, Tabs } from "expo-router";
 import { useFonts } from "expo-font";
 import TabBar from "../components/TabBar";
 import "react-native-reanimated";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const RootLayout = () => {
   SplashScreen.preventAutoHideAsync();
@@ -22,7 +23,7 @@ const RootLayout = () => {
   if (!fontsLoaded && !error) return null;
 
   return (
-    <>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <Tabs
         initialRouteName="index"
         screenOptions={{}}
@@ -57,7 +58,7 @@ const RootLayout = () => {
           }}
         />
       </Tabs>
-    </>
+    </GestureHandlerRootView>
   );
 };
 
