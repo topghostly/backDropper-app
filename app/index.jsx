@@ -66,7 +66,7 @@ const Index = () => {
         <NavBar />
       </View>
       <View className="flex-1">
-        <MasonryList
+        <MasonryList 
           images={newList}
           columns={2}
           spacing={2}
