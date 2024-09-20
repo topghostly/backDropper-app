@@ -2,7 +2,6 @@ import { View, Text, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import NavBar from "../components/NavBar";
-import { useNavigation } from "@react-navigation/native";
 import MasonryList from "react-native-masonry-list";
 import "react-native-reanimated";
 import usePixel from "../hooks/usePixel";
