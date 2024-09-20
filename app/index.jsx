@@ -66,7 +66,7 @@ const Index = () => {
         <NavBar />
       </View>
       <View className="flex-1">
-        <MasonryList 
+        <MasonryList
           images={newList}
           columns={2}
           spacing={2}
@@ -79,16 +79,6 @@ const Index = () => {
           onLongPressImage={(item) => {
             setDownloadLink(item.downloadUri);
             setShowModalScreen(true);
-          }}
-          renderIndividualFooter={(item) => {
-            return (
-              <Text
-                className="text-sm font-nbold pl-2 mb-3 w-[170px]"
-                numberOfLines={2}
-              >
-                {item.photographer}
-              </Text>
-            );
           }}
           onEndReached={getNewContent}
           rerender={true}
