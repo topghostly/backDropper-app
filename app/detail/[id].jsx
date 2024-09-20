@@ -118,7 +118,7 @@ const Details = () => {
       const data = await request.json();
       setImageData([
         {
-          uri: data.src.medium,
+          uri: data.src.large,
           avgColor: data.avg_color,
           dimensions: {
             width: data.width,
