@@ -4,7 +4,7 @@
     "slug": "imageRaftApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo/logo.jpg",
+    "icon": "./assets/logo/logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -25,7 +25,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/logo/logo.jpg"
+      "favicon": "./assets/logo/logo.png"
     },
     "plugins": ["expo-router"],
     "experiments": {
