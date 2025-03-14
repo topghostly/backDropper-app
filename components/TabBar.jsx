@@ -17,7 +17,15 @@ const TabBar = ({ state, descriptors, navigation }) => {
             ? options.title
             : route.name;
 
-        if (["_sitemap", "+not-found", "detail/[id]"].includes(route.name))
+        if (
+          [
+            "_sitemap",
+            "+not-found",
+            "detail/[id]",
+            "Downloads",
+            // "Search",
+          ].includes(route.name)
+        )
           return null;
 
         const isFocused = state.index === index;
@@ -89,9 +97,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     backgroundColor: "white",
-    width: 250,
+    width: 170,
     left: "50%",
-    transform: [{ translateX: -125 }],
+    transform: [{ translateX: -85 }],
+    marginHorizontal: "auto",
     paddingVertical: 7,
     borderRadius: 25,
     borderCurve: "continuous",

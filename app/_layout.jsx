@@ -43,13 +43,13 @@ const RootLayout = () => {
             headerShown: false,
           }}
         />
-        <Tabs.Screen
+        {/* <Tabs.Screen
           name="downloads"
           options={{
             title: "Downloads",
             headerShown: false,
           }}
-        />
+        /> */}
         <Tabs.Screen
           name="detail/[id]"
           options={{
